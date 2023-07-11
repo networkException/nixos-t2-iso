@@ -30,6 +30,17 @@ jobs:
       env:
         GC_DONT_GC: 1
       run: |
+        function printstuff() {
+            while true
+            do
+                sudo df -h
+                sudo findmnt
+                sleep 10
+            done
+        }
+
+        printstuff &
+
         sudo mount -o remount,size=30G /run/user/1001
 
         for iso in $(nix flake show --json | nix run nixpkgs#jq -- -r keys[]); do
